@@ -76,12 +76,18 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- Selenium API -->
+      <!-- Selenium API  -->
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-api</artifactId>
       <version>3.141.59</version>
     </dependency>
+    
+<!--    <dependency>-->
+<!--    <groupId>org.seleniumhq.selenium</groupId>-->
+<!--    <artifactId>selenium-java</artifactId>-->
+<!--    <version>4.19.1</version>  Or latest -->
+<!--</dependency>-->
 
     <!-- ExtentReports -->
     <dependency>
@@ -130,6 +136,9 @@
       <artifactId>poi-ooxml</artifactId>
       <version>5.2.3</version>
     </dependency>
+
+
+
 
   </dependencies>
 
