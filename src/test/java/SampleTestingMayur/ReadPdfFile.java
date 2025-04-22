@@ -11,6 +11,7 @@ import java.util.regex.Matcher;
 public class ReadPdfFile {
 
     public static void main(String[] args) {
+//    	added doc, docx and pdf
         String filePath = "C:\\Users\\Mayur More\\Downloads\\AshwiniPatil-CV.pdf"; // Update the file path
         String empEmailid = "";
         String empMobileNo = "";

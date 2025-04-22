@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 public class ReadDocxFile {
 
     public static void main(String[] args) {
+//    	added doc, docx and pdf
         String filePath = "C:\\Users\\Mayur More\\Downloads\\Mayur More Resume .pdf mayur (1).docx"; // Update the file path
         String empEmailid = "";
         String empMobileNo = "";

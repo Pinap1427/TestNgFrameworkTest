@@ -39,6 +39,7 @@ public class ReadDocFile {
             System.out.println("Extracted Mobile No: " + empMobileNo);
         } catch (IOException e) {
             e.printStackTrace();
+            /// added doc, docx and pdf /////
         }
     }
 }
