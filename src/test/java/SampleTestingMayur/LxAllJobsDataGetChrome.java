@@ -2,7 +2,7 @@ package SampleTestingMayur;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.*;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.poi.ss.usermodel.*;
@@ -20,9 +20,7 @@ public class LxAllJobsDataGetChrome {
     public static void main(String[] args) throws InterruptedException, IOException {
         WebDriverManager.chromedriver().setup();
 
-        // Launch Chrome with visible UI (Non-headless)
         ChromeOptions options = new ChromeOptions();
-        // options.addArguments("--headless=new"); // Headless disabled for debugging
         options.addArguments("--window-size=1920,1080");
         options.addArguments("--disable-gpu");
         options.addArguments("--no-sandbox");
@@ -33,14 +31,12 @@ public class LxAllJobsDataGetChrome {
         driver.manage().window().maximize();
 
         driver.get("https://linkcxo.com/login-signup");
-        driver.navigate().refresh();
-        Thread.sleep(1000);
 
         // Login
         driver.findElement(By.id("emailId")).sendKeys("kprabhat956@gmail.com");
         driver.findElement(By.xpath("//button[.='Continue']")).click();
 
-        // OTP manually entered (static: 444444)
+        // OTP manually entered (static for testing)
         for (int i = 0; i < 6; i++) {
             driver.findElement(By.xpath("//input[@name='otp-input-" + i + "']")).sendKeys("4");
         }
@@ -48,9 +44,10 @@ public class LxAllJobsDataGetChrome {
         WebDriverWait wait = new WebDriverWait(driver, 10);
         WebElement jobsButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[.='Jobs']")));
         jobsButton.click();
-        Thread.sleep(3000);
 
-        // Scroll till end with 3-second wait after each scroll
+        Thread.sleep(3000); // Allow time for page to load
+
+        // Scroll till all jobs are loaded
         JavascriptExecutor js = (JavascriptExecutor) driver;
         int prevCount = 0, scrollTries = 0;
 
@@ -60,7 +57,7 @@ public class LxAllJobsDataGetChrome {
             System.out.println("Jobs found so far: " + currentCount);
 
             js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
-            Thread.sleep(3000); // Wait 3 seconds after scroll to allow content to load
+            Thread.sleep(3000); // Wait for new jobs to load
 
             if (currentCount == prevCount) {
                 scrollTries++;
@@ -73,12 +70,12 @@ public class LxAllJobsDataGetChrome {
 
         System.out.println("Finished scrolling. Total jobs loaded: " + prevCount);
 
-        // Extract data
+        // Extract job data
         List<WebElement> titles = driver.findElements(By.xpath("//div[@class='text-lg text-white line-clamp-1 font-semibold mb-2 ']"));
         List<WebElement> industries = driver.findElements(By.xpath("//h4[@class='text-sm text-lxgray-200  line-clamp-1']"));
         List<WebElement> locations = driver.findElements(By.xpath("//p[@class='text-sm text-lxgray-200 line-clamp-1']"));
 
-        // Excel
+        // Create Excel file
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("Job Data");
 
@@ -94,7 +91,6 @@ public class LxAllJobsDataGetChrome {
             row.createCell(2).setCellValue(i < locations.size() ? locations.get(i).getText() : "N/A");
         }
 
-        // Save Excel
         FileOutputStream fileOut = new FileOutputStream("JobData1.xlsx");
         workbook.write(fileOut);
         fileOut.close();
@@ -102,6 +98,6 @@ public class LxAllJobsDataGetChrome {
 
         System.out.println("Excel saved as JobData1.xlsx");
 
-//        driver.quit();
+        driver.quit(); // Optional - close browser
     }
 }
