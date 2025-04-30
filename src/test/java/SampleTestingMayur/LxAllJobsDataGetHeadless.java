@@ -9,13 +9,26 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-public class LxAllJobsDataGet {
+public class LxAllJobsDataGetHeadless {
 
     public static void main(String[] args) throws InterruptedException, IOException {
         WebDriverManager.chromedriver().setup();
-        WebDriver driver = new ChromeDriver();
+
+        // Headless Chrome Setup
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless=new"); // Use "--headless" if "--headless=new" causes issues
+        options.addArguments("--window-size=1920,1080");
+        options.addArguments("--disable-gpu");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+
+        WebDriver driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.manage().window().maximize();
 
@@ -27,13 +40,17 @@ public class LxAllJobsDataGet {
         driver.findElement(By.id("emailId")).sendKeys("kprabhat956@gmail.com");
         driver.findElement(By.xpath("//button[.='Continue']")).click();
 
-        // OTP manually entered
+        // OTP manually entered (here using static 444444)
         for (int i = 0; i < 6; i++) {
             driver.findElement(By.xpath("//input[@name='otp-input-" + i + "']")).sendKeys("4");
         }
 
-        Thread.sleep(2000);
-        driver.findElement(By.xpath("//div[.='Jobs']")).click();
+//        Thread.sleep(2000);
+//        driver.findElement(By.xpath("//div[.='Jobs']")).click();
+        
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        WebElement jobsButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[.='Jobs']")));
+        jobsButton.click();
         Thread.sleep(3000);
 
         // Scroll till end
@@ -79,14 +96,13 @@ public class LxAllJobsDataGet {
         }
 
         // Save Excel
-        FileOutputStream fileOut = new FileOutputStream("JobData.xlsx");
+        FileOutputStream fileOut = new FileOutputStream("JobData1.xlsx");
         workbook.write(fileOut);
         fileOut.close();
         workbook.close();
-        
 
         System.out.println("Excel saved as JobData.xlsx");
 
-//        driver.quit();
+        driver.quit();
     }
 }
