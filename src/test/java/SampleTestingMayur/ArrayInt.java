@@ -14,7 +14,7 @@ public class ArrayInt {
         int count = 1;
 
         for (int i = 0; i < str.length(); i++) {
-        	System.out.println(str.length());
+//        	System.out.println(str.length());
             // Check if next character is the same
             if (i < str.length() - 1 && str.charAt(i) == str.charAt(i + 1)) {
                 count++;
@@ -27,7 +27,7 @@ public class ArrayInt {
     }
 
     public static void main(String[] args) {
-        String str = "aaaabbbccdddeeffggggggggggghhhhhhhhhhhhiiiiiiiiiiiiiijjjjjjjjjjkkkkkkkkklllllllllllllllllllllllllllmmmmmmmmmmnoopqqrrrrrrssssssssttuuuuvvvvwwwxxxxyyyyyzzz";
+        String str = "aaaaaaabbbbbbbbccccccccc";
 //        String str="aabbbbccd";
         String compressed = compressString(str);
         System.out.println(compressed);
