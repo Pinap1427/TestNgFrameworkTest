@@ -51,6 +51,8 @@ public class Flipkart {
 
         By buyNowLocator = By.xpath("//button[@type='button']");
         wait.until(ExpectedConditions.elementToBeClickable(buyNowLocator)).click();
+        
+       
 
         takeScreenshot(driver, "login_prompt.png");
         driver.quit();
