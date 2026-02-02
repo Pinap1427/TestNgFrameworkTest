@@ -4,15 +4,16 @@ import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
 
 public class UnirestExample {
-    private static final String URL = "http://noco.dev.linkcxo.com/api/v1/db/data/noco/pamy4qwauxlp395/Cities-List/views/CitiesListExported17Csv?offset=0&limit=25&where=";
-    private static final String TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthaWxhc0BsaW5rY3hvLmNvbSIsImlkIjoidXMzZ2dsejc0MGV6bnV4ayIsInJvbGVzIjp7Im9yZy1sZXZlbC12aWV3ZXIiOnRydWV9LCJ0b2tlbl92ZXJzaW9uIjoiMGRmZDg1NTllZjg4YjcyZGRhNDg0YmIzNWU0NGY1Y2FmMmZmN2YzN2EyOTg0NmQ4Nzc2NDFmNTkzZGI5ODY3MmIxOGQ1M2I1ZjM5ZjY0MmUiLCJpYXQiOjE3NDIyNzY0OTYsImV4cCI6MTc0MjMxMjQ5Nn0.FemzYzd1F7kVuhfzdMp3OcYCeyXmAOHKuFm_e4lk4YU";
+    private static final String URL = "https://api.dev.cxostory.in/v1/configuration/api/v1/db/data/v1/linkcxo/categories?limit=500&fields=Id,Categories";
+    private static final String TOKEN = "Bearer MeTCxqIbUpPesE6G9hcl0ZYh0m8Ffpas2oRfLMVZ3CnEOSzTKhqADcmS4Oajo3POeS061BlFP0OjTvdr4vvIwwI8FYlL2y4Eo487UHw6EU7951sWds6Y0xbeCwFVaOME";
 
     public static void main(String[] args) {
         try {
             int retries = 3;
             for (int i = 0; i < retries; i++) {
                 HttpResponse<String> response = Unirest.get(URL)
-                        .header("xc-auth", TOKEN)
+                        .header("Authorization", TOKEN) // ✅ correct header
+                        .header("Accept", "*/*")
                         .asString();
 
                 System.out.println("Requesting URL: " + URL);
@@ -20,10 +21,10 @@ public class UnirestExample {
                 System.out.println("Response Body: " + response.getBody());
 
                 if (response.getStatus() == 200) {
-                    break; // Exit loop on success
+                    break; // ✅ success
                 } else {
                     System.out.println("Retrying... (" + (i + 1) + "/" + retries + ")");
-                    Thread.sleep(3000); // Wait for 3 seconds before retrying
+                    Thread.sleep(3000);
                 }
             }
         } catch (Exception e) {

@@ -2,7 +2,7 @@ package SampleTestingMayur;
 
 public class SimpleCharacterCount {
     public static void main(String[] args) {
-        String input = "Americcca";
+        String input = "Abhishek Gowda";
         input = input.toLowerCase().replaceAll("\\s+", ""); // remove spaces and convert to lowercase
 
         int[] count = new int[26]; // For 26 letters a-z

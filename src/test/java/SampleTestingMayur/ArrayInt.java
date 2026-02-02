@@ -27,7 +27,7 @@ public class ArrayInt {
     }
 
     public static void main(String[] args) {
-        String str = "aaaaaaabbbbbbbbccccccccc";
+        String str = "america";
 //        String str="aabbbbccd";
         String compressed = compressString(str);
         System.out.println(compressed);

@@ -16,7 +16,12 @@ import java.util.Map;
 public class LinkedInScraper {
 
     public static void main(String[] args) {
-        String url = "https://www.linkedin.com/in/mayur-more-9b9a46229/";
+//        String url = "https://sg.linkedin.com/in/pandurangnayak?trk=people-guest_people_search-card";
+//    	String url = "https://www.linkedin.com/in/mayur-more-9b9a46229/";
+//    	String url ="https://uk.linkedin.com/in/amisha-patel-arje";
+    	String url ="https://ca.linkedin.com/in/brsoni";
+//    	href="https://ca.linkedin.com/in/brsoni"
+    		
         Map<String, String> profileData = scrapeLinkedInProfile(url);
 
         System.out.println("\n===== Final Extracted Data =====");
@@ -29,7 +34,12 @@ public class LinkedInScraper {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--incognito");
-         options.addArguments("--headless"); // Enable for headless mode
+        
+        options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"});
+        options.setExperimentalOption("useAutomationExtension", false);
+        
+//         options.addArguments("--headless"); // Enable for headless mode
+//        options.addArguments("--headless=new"); 
 
         WebDriver driver = new ChromeDriver(options);
         driver.manage().window().maximize();
@@ -57,7 +67,7 @@ public class LinkedInScraper {
         }
 
         if (!loaded) {
-            System.out.println("❌ Failed to load the correct profile URL after 10 attempts.");
+            System.out.println("❌ Failed to load the correct profile URL after 30 attempts.");
             driver.quit();
             throw new RuntimeException("Failed to load LinkedIn profile.");
         }
@@ -89,7 +99,7 @@ public class LinkedInScraper {
         data.put("Honors and Awards", extractSafe(driver, By.xpath("//section[@data-section='honors-and-awards']"), "Honors and Awards"));
         data.put("Languages", extractSafe(driver, By.xpath("//section[@data-section='languages']"), "Languages"));
 
-        driver.quit();
+//        driver.quit();
         return data;
     }
 
